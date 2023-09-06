@@ -51,3 +51,4 @@ jobs:
             WHEEL_PATH=dist/macaron-0.4.0-py3-none-any.whl
           tags: ghcr.io/nathanwn/macaron:latest
           platforms: linux/amd64,linux/arm64
+          push: true
