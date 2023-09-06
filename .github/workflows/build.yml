@@ -41,3 +41,12 @@ jobs:
 
       - name: Test wheel content
         run: unzip -l macaron/dist/macaron*.whl
+
+      - name: Build Macaron image
+        uses: docker/build-push-action@v4
+        with:
+          context: macaron/
+          file: macaron/docker/Dockerfile.final
+          build-args:
+            WHEEL_PATH=macaron/dist/macaron-0.4.0-py3-none-any.whl
+          tags: ghcr.io/nathanwn/macaron:latest
