@@ -34,3 +34,10 @@ jobs:
 
       - name: Test path
         run: cat macaron/docker/Dockerfile.final
+
+      - name: Download Macaron wheel
+        run: |
+          curl -fLo macaron/dist/macaron-0.4.0-py3-none-any.whl --create-dirs https://github.com/oracle/macaron/releases/download/v0.4.0/macaron-0.4.0-py3-none-any.whl
+
+      - name: Test wheel content
+        run: unzip -l macaron/dist/macaron*.whl
