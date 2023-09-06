@@ -43,7 +43,7 @@ jobs:
         run: unzip -l macaron/dist/macaron*.whl
 
       - name: Log in to GitHub Container Registry
-        run: |
+        run: >
           docker login ghcr.io
           --username ${{ github.actor }}
           --password ${{ secrets.GITHUB_TOKEN }}
