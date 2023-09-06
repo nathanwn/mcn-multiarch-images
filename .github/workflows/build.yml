@@ -31,3 +31,6 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Test path
+        run: cat macaron/docker/Dockerfile.final
