@@ -31,10 +31,16 @@ jobs:
         env:
           # configure cibuildwheel to build native archs ('auto'), and some
           # emulated ones
-          CIBW_ARCHS_LINUX: auto aarch64
+          CIBW_ARCHS_LINUX: aarch64
           CIBW_PROJECT_REQUIRES_PYTHON: ">=3.11"
           CIBW_BEFORE_BUILD: >
             yum install make curl wget unzip -y &&
+            # Install go
+            curl -so "/tmp/go1.21.7.linux-arm64.tar.gz" -L "https://go.dev/dl/go1.21.7.linux-arm64.tar.gz" &&
+            rm -rf /usr/local/go &&
+            tar -C /usr/local -xzf /tmp/go1.21.7.linux-arm64.tar.gz &&
+            export PATH=$PATH:/usr/local/go/bin &&
+            go version &&
             which python3.11 &&
             python3.11 -m venv .venv &&
             source .venv/bin/activate &&
