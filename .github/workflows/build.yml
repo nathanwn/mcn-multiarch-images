@@ -33,10 +33,10 @@ jobs:
           # emulated ones
           CIBW_ARCHS_LINUX: auto aarch64
           CIBW_PROJECT_REQUIRES_PYTHON: ">=3.11"
-          CIBW_BEFORE_ALL: >
+          CIBW_BERORE_ALL: cd macaron
+          CIBW_BEFORE_BUILD: >
             yum install make curl wget unzip -y &&
             make setup
-        working-directory: ./macaron
 
       - name: Check built wheels
         run: ls -la ./macaron/wheelhouse/*.whl
