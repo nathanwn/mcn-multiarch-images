@@ -19,7 +19,7 @@ jobs:
         with:
           repository: oracle/macaron
           ref: 'staging'
-          path: macaron
+          path: '.'
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -33,13 +33,12 @@ jobs:
           # emulated ones
           CIBW_ARCHS_LINUX: auto aarch64
           CIBW_PROJECT_REQUIRES_PYTHON: ">=3.11"
-          CIBW_BERORE_ALL: cd macaron
           CIBW_BEFORE_BUILD: >
             yum install make curl wget unzip -y &&
             make setup
 
       - name: Check built wheels
-        run: ls -la ./macaron/wheelhouse/*.whl
+        run: ls -la ./wheelhouse/*.whl
 
       # - uses: actions/upload-artifact@v4
       #   with:
@@ -64,7 +63,7 @@ jobs:
       #     curl -fLo macaron/dist/macaron-0.4.0-py3-none-any.whl --create-dirs https://github.com/oracle/macaron/releases/download/v0.4.0/macaron-0.4.0-py3-none-any.whl
 
       - name: Test wheel content
-        run: unzip -l ./macaron/wheelhouse/macaron*.whl
+        run: unzip -l ./wheelhouse/macaron*.whl
         # run: unzip -l macaron/dist/macaron*.whl
 
       # - name: Log in to GitHub Container Registry
