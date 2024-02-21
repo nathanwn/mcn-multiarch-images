@@ -36,6 +36,7 @@ jobs:
           CIBW_BEFORE_BUILD: >
             yum search java &&
             yum search jdk &&
+            yum search jre &&
             yum install make curl wget unzip java-17-openjdk-devel -y &&
             export JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:/bin/java::") &&
             which java &&
