@@ -35,6 +35,7 @@ jobs:
           CIBW_PROJECT_REQUIRES_PYTHON: ">=3.11"
           CIBW_BEFORE_BUILD: >
             yum search java &&
+            yum search jdk &&
             yum install make curl wget unzip java-17-openjdk-devel -y &&
             export JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:/bin/java::") &&
             which java &&
