@@ -35,6 +35,9 @@ jobs:
           CIBW_PROJECT_REQUIRES_PYTHON: ">=3.11"
           CIBW_BEFORE_BUILD: >
             yum install make curl wget unzip -y &&
+            which python3.11 &&
+            python3.11 -m venv .venv &&
+            source .venv/bin/activate &&
             make setup
 
       - name: Check built wheels
