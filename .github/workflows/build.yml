@@ -10,6 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       packages: write  # This is required to push the images to ghcr.
+    env:
+      MACARON_VERSION: 0.10.0
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -18,14 +21,14 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: oracle/macaron
-          ref: 'staging'
+          ref: 'v0.10.0'
           path: macaron
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
+        uses: docker/setup-qemu-action@v3
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
@@ -39,7 +42,7 @@ jobs:
 
       - name: Download Macaron wheel
         run: |
-          curl -fLo macaron/dist/macaron-0.4.0-py3-none-any.whl --create-dirs https://github.com/oracle/macaron/releases/download/v0.4.0/macaron-0.4.0-py3-none-any.whl
+          curl -fLo "macaron/dist/macaron-${MACARON_VERSION}-py3-none-any.whl" --create-dirs "https://github.com/oracle/macaron/releases/download/v${MACARON_VERSION}/macaron-${MACARON_VERSION}-py3-none-any.whl"
 
       - name: Test wheel content
         run: unzip -l macaron/dist/macaron*.whl
@@ -56,7 +59,7 @@ jobs:
           context: macaron/
           file: macaron/docker/Dockerfile.final
           build-args:
-            WHEEL_PATH=dist/macaron-0.4.0-py3-none-any.whl
+            WHEEL_PATH=dist/macaron-0.10.0-py3-none-any.whl
           tags: ghcr.io/nathanwn/macaron:latest
           platforms: linux/amd64,linux/arm64
           push: true
